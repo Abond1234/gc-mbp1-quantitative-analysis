@@ -1,0 +1,9 @@
+# Exact foundation runtime versions; complete source environment is captured separately.
+numpy==2.5.1
+pandas==3.0.3
+pyarrow==25.0.0
+databento==0.82.0
+databento-dbn==0.63.0
+zstandard==0.25.0
+psutil==7.2.2
+tzdata==2026.3

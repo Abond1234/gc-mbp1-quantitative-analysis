@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "reason": "Reviewed path portability and fail-closed reuse-only option; native conversion and validation unchanged.",
+  "original_build_config": {
+    "chunk_rows": 250000,
+    "code_sha256": {
+      "mbp1_ingest.py": "fa05fc30658536b491ed985aa589064359dec5943aabe6c7b3ffaf8ba0ea50f1",
+      "mbp1_ingestion_contract.md": "d0ad2546393d95caea8a171e52366d8a4611268f6a713cf5d34c6ad350e33b64",
+      "mbp1_validation.py": "1b43d0f1605e3f51d740bc35850ecbcdbc8564aece4115618ece90ef47c937d6"
+    },
+    "libraries": {
+      "databento": "0.82.0",
+      "databento-dbn": "0.63.0",
+      "numpy": "2.5.1",
+      "psutil": "7.2.2",
+      "pyarrow": "25.0.0",
+      "zstandard": "0.25.0"
+    },
+    "memory_gb": 31.675918579101562,
+    "part_rows": 5000000,
+    "pipeline_version": "1.0.0",
+    "python": "3.14.5",
+    "workers": 1
+  },
+  "reviewed_runtime_config": {
+    "pipeline_version": "1.0.0",
+    "python": "3.14.5",
+    "libraries": {
+      "databento": "0.82.0",
+      "databento-dbn": "0.63.0",
+      "numpy": "2.5.1",
+      "pyarrow": "25.0.0",
+      "zstandard": "0.25.0",
+      "psutil": "7.2.2"
+    },
+    "code_sha256": {
+      "mbp1_ingest.py": "35351ff9a33061c66913e8d186254efd7e63ba7de06d8d7b8474eb7e75164ff7",
+      "mbp1_validation.py": "1b43d0f1605e3f51d740bc35850ecbcdbc8564aece4115618ece90ef47c937d6",
+      "mbp1_ingestion_contract.md": "d0ad2546393d95caea8a171e52366d8a4611268f6a713cf5d34c6ad350e33b64",
+      "mbp1_paths.py": "0a74572cfffb05167a6e54a0a1ce0885772da854eefe131e9bc7b2fbdad9bb3f",
+      "mbp1_migration.py": "98be96966972b9877b12cffe8e891aac3d77d7622b0af18889b73098dbedad9b",
+      "resources.py": "e886698db4e62d2f264d016a2b225433d1b2a75b8fd1012e3143b2209cec6f42"
+    },
+    "chunk_rows": 250000,
+    "part_rows": 5000000,
+    "workers": 1,
+    "memory_gb": 31.675918579101562
+  }
+}

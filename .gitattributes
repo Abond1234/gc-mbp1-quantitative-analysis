@@ -1,0 +1,2 @@
+# Retain exact source bytes: checkpoint identities include source file hashes.
+* -text
