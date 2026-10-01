@@ -1,11 +1,15 @@
 # Contributor guidance
 
 Read AGENTS.md for the binding research and data-integrity rules.
+Current date assignments are in configs/mbp1_research_splits.json and
+project_docs/mbp1_research_split_policy.md. Start notebook work with
+notebooks/02_mbp1_development.ipynb and scan_development. Both holdouts are blocked
+by default. Use GitNexus throughout code exploration, impact analysis and review.
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **GC MBP-1 QUANTITATIVE ANALYSIS** (275 symbols, 526 relationships, 17 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **gc-mbp1-quantitative-analysis** (342 symbols, 659 relationships, 19 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > Index stale? Run `node .gitnexus/run.cjs analyze` from the project root — it auto-selects an available runner. No `.gitnexus/run.cjs` yet? `npx gitnexus analyze` (npm 11 crash → `npm i -g gitnexus`; #1939).
 
@@ -29,10 +33,10 @@ This project is indexed by GitNexus as **GC MBP-1 QUANTITATIVE ANALYSIS** (275 s
 
 | Resource | Use for |
 |----------|---------|
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/clusters` | All functional areas |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/processes` | All execution flows |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/process/{name}` | Step-by-step execution trace |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/clusters` | All functional areas |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/processes` | All execution flows |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/process/{name}` | Step-by-step execution trace |
 
 ## CLI
 

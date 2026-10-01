@@ -10,7 +10,10 @@ notebook.metadata["kernelspec"] = {
 }
 notebook.cells = [
     nbf.v4.new_markdown_cell(
-        "# MBP-1 ingestion and validation\n\n"
+        "# MBP-1 historical ingestion and integrity validation\n\n"
+        "**Full-period infrastructure audit; not a research starting notebook.** "
+        "Use `02_mbp1_development.ipynb` for Development-only work. "
+        "Current splits are in `project_docs/mbp1_research_split_policy.md`. "
         "Infrastructure audit only: no features, labels, models or strategies. "
         "Read `project_docs/mbp1_ingestion_contract.md` before running. "
         "The full-period audit was expressly authorized; this does not authorize "
@@ -19,9 +22,15 @@ notebook.cells = [
         "```powershell\n.venv/Scripts/python.exe -m src.data.mbp1_ingest --reuse-only\n"
         ".venv/Scripts/python.exe scripts/benchmark_mbp1.py\n```\n"
         "Rerunning ingestion verifies identities and reuses completed monthly partitions. "
-        "This notebook reads the resulting audit tables and a small Validation-day example."
+        "This notebook reads full-period audit tables and a small Development-day example. "
+        "Execution is blocked by default; a separately authorized infrastructure task "
+        "must explicitly enable the switch in the first code cell."
     ),
     nbf.v4.new_code_cell(
+        "RUN_FULL_PERIOD_INFRASTRUCTURE_AUDIT = False\n"
+        "if not RUN_FULL_PERIOD_INFRASTRUCTURE_AUDIT:\n"
+        "    raise PermissionError('Historical full-period audit is locked. "
+        "Use 02_mbp1_development.ipynb for research.')\n\n"
         "import hashlib\nimport json\nimport sys\nfrom pathlib import Path\n"
         "from importlib.metadata import version\n"
         "from src.data.mbp1_paths import ROOT\n"
@@ -107,6 +116,8 @@ notebook.cells = [
         "`project_docs/mbp1_foundation_findings.md` for the completed assessment."
     ),
 ]
+for index, cell in enumerate(notebook.cells):
+    cell.id = f"infrastructure-{index:02d}"
 destination = Path(__file__).resolve().parents[1] / "notebooks/01_mbp1_ingestion_and_validation.ipynb"
 nbf.write(notebook, destination)
 print(destination)

@@ -1,5 +1,12 @@
 # GC MBP-1 foundation: executed findings
 
+Current research policy update, 2026-10-01: [frozen research splits](mbp1_research_split_policy.md)
+assign Development through 2024-09-30, Validation 2024-10-01 through 2025-09-30,
+and Final Test 2025-10-01 through 2026-09-25. Both holdouts are blocked by default.
+The findings below are preserved historical full-period infrastructure evidence;
+their old access authorization does not permit holdout research. The ingestion
+contract and original build/checkpoint provenance remain unchanged.
+
 ## Result and scope
 
 The local Bronze-to-Silver foundation is complete. Representation integrity is

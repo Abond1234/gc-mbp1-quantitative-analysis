@@ -1,5 +1,13 @@
 # GC MBP-1 migration completion report
 
+Post-migration research policy update, 2026-10-01:
+[gc-mbp1-chronological-v1](mbp1_research_split_policy.md) now assigns Development
+2021-09-27 through 2024-09-30, Validation 2024-10-01 through 2025-09-30, and
+Final Test 2025-10-01 through 2026-09-25. Both holdouts are blocked by default.
+The migration results below describe the policy and executed checks at migration
+time; the historical Validation/2025+ labels are not the current access rules.
+Original evidence and migration compatibility identities are preserved.
+
 Completed: 2026-09-29T05:57:24.757333+00:00
 
 Destination: `C:\Users\abond\Desktop\WORK FILES\Systemic\GC MBP-1 QUANTITATIVE ANALYSIS`
@@ -159,7 +167,8 @@ The degraded dates are 2024-09-18, 2025-09-17, 2025-09-24, 2025-11-28,
 2026-03-16 and 2026-04-10. The 2026-09-09 replacement has its valid marker and
 914,441 records. Physical contract symbols remain unresolved. Gaps, crossed BBO,
 clock differences and non-trade price sentinels remain intact and documented;
-the data is not claimed anomaly-free. Final Test from 2025 remains guarded.
+the data is not claimed anomaly-free. At migration time, Final Test began in
+2025; the post-migration policy update above supersedes that assignment.
 
 No migration or package-parity blocker remains. Detailed machine-readable evidence
 is under `data/metadata/mbp1/migration/`: preflight, transfer inventory, original

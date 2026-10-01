@@ -118,7 +118,7 @@ class MBP1FoundationTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 scan_mbp1("2024-01-01", "2024-01-02", root=temp)
             with self.assertRaises(PermissionError):
-                scan_mbp1("2025-01-01", "2025-01-02", root=temp)
+                scan_mbp1("2025-10-01", "2025-10-02", root=temp)
 
 
 if __name__ == "__main__":

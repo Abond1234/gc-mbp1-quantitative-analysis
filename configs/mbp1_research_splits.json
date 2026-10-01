@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "policy_id": "gc-mbp1-chronological-v1",
+  "frozen_on": "2026-10-01",
+  "assignment_key": "session_date_ny",
+  "timezone": "America/New_York",
+  "coverage_start": "2021-09-27",
+  "coverage_end": "2026-09-25",
+  "selection_basis": "Approximately 60/20/20 elapsed time, whole sessions and month-end boundaries; no outcome-based selection",
+  "splits": [
+    {"name": "development", "start": "2021-09-27", "end": "2024-09-30"},
+    {"name": "validation", "start": "2024-10-01", "end": "2025-09-30"},
+    {"name": "final_test", "start": "2025-10-01", "end": "2026-09-25"}
+  ]
+}

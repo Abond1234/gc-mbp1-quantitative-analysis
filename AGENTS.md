@@ -1,12 +1,22 @@
 # GC MBP-1 research governance
 
 Read README.md, project_docs/mbp1_ingestion_contract.md, the data dictionary,
-foundation findings and migration report before changing the pipeline.
+foundation findings, migration report and project_docs/mbp1_research_split_policy.md
+before changing the pipeline. Use GitNexus throughout project work for code
+discovery/context, pre-edit impact analysis and change-scope review.
 
 - Freeze research questions, eligibility, thresholds and horizons before analysis.
-- Development ends in 2023; Validation is 2024; Final Test starts in 2025.
-  Keep scanner access to Final Test blocked by default. Migration integrity
+- Frozen policy: configs/mbp1_research_splits.json (gc-mbp1-chronological-v1).
+  Development: 2021-09-27 through 2024-09-30; Validation: 2024-10-01 through
+  2025-09-30; Final Test: 2025-10-01 through 2026-09-25, inclusive NY session dates.
+  Use scan_development for notebooks. Keep Validation and Final Test blocked by
+  default; each holdout needs its own explicit access flag and authorized procedure.
+  Do not recompute boundaries as data grows or select them using outcomes. Migration integrity
   checks do not authorize feature selection or descriptive Final Test research.
+- Tune with chronological Development folds only; fit transformations on training
+  folds. Freeze horizon-dependent purging/embargo, eligibility and evaluation rules
+  before Validation; freeze the final procedure before Final Test. Preserve all
+  sessions in split membership even when later research eligibility excludes them.
 - Preserve raw bytes, native precision, delivery order, session and roll boundaries.
 - Run deterministic CPU numerics. No credentials or billable API calls in this pipeline.
 - Never commit data, generated metadata, environments, logs or secrets.
@@ -18,7 +28,7 @@ foundation findings and migration report before changing the pipeline.
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **GC MBP-1 QUANTITATIVE ANALYSIS** (275 symbols, 526 relationships, 17 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **gc-mbp1-quantitative-analysis** (342 symbols, 659 relationships, 19 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > Index stale? Run `node .gitnexus/run.cjs analyze` from the project root — it auto-selects an available runner. No `.gitnexus/run.cjs` yet? `npx gitnexus analyze` (npm 11 crash → `npm i -g gitnexus`; #1939).
 
@@ -42,10 +52,10 @@ This project is indexed by GitNexus as **GC MBP-1 QUANTITATIVE ANALYSIS** (275 s
 
 | Resource | Use for |
 |----------|---------|
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/clusters` | All functional areas |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/processes` | All execution flows |
-| `gitnexus://repo/GC MBP-1 QUANTITATIVE ANALYSIS/process/{name}` | Step-by-step execution trace |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/clusters` | All functional areas |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/processes` | All execution flows |
+| `gitnexus://repo/gc-mbp1-quantitative-analysis/process/{name}` | Step-by-step execution trace |
 
 ## CLI
 

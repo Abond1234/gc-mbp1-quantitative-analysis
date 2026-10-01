@@ -31,8 +31,8 @@ def verify_silver_fields():
     previous_segment = 1
     previous_idx = -1
     observed_peak = 0
-    for batch in scan_mbp1("2021-09-27", "2026-09-26", columns,
-                           allow_final_test=True).to_batches():
+    for batch in scan_mbp1("2021-09-27", "2026-09-25", columns,
+                           allow_validation=True, allow_final_test=True).to_batches():
         if not batch.num_rows:
             continue
         table = pa.Table.from_batches([batch])

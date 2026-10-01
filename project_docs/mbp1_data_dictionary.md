@@ -1,6 +1,11 @@
 # MBP-1 Silver store
 
 This additive foundation is separate from the existing OHLCV research engines.
+Current membership and access follow the
+[research split policy](mbp1_research_split_policy.md): Development 2021-09-27 to
+2024-09-30, Validation 2024-10-01 to 2025-09-30, Final Test 2025-10-01 to
+2026-09-25, all inclusive New York session dates. The source of truth is
+`configs/mbp1_research_splits.json`. The historical ingestion contract is unchanged.
 Run using this project's independent virtual environment (see README.md for setup):
 
 ```powershell
@@ -124,9 +129,9 @@ volume. This does not guarantee that it is the most active contract in every
 ## Querying
 
 ```python
-from src.data.mbp1_access import scan_mbp1
+from src.data.mbp1_access import scan_development
 
-scan = scan_mbp1(
+scan = scan_development(
     start="2024-09-01", end="2024-09-30",  # inclusive dates
     columns=["session_date_ny", "event_idx_day", "ts_event", "ts_recv",
              "instrument_id", "roll_segment", "contract_change", "sequence",
@@ -138,7 +143,7 @@ for batch in scan.to_batches():
     print(batch.num_rows)
 
 # Materialize only a deliberately small selection:
-day = scan_mbp1("2024-09-03", "2024-09-03", ["ts_event", "price"]).to_table()
+day = scan_development("2024-09-03", "2024-09-03", ["ts_event", "price"]).to_table()
 pandas_day = day.to_pandas()
 ```
 
@@ -153,29 +158,37 @@ explicitly before sequential processing. Timestamp ordering is not a substitute.
 Optional libraries are not required or installed by this pipeline:
 
 ```python
-# Polars lazy scan (if installed):
+# Polars: consume guarded Development batches (if installed).
 import polars as pl
-from datetime import date
-from src.data.mbp1_access import mbp1_files
-
-lf = (pl.scan_parquet(mbp1_files("2024-09-01", "2024-09-30"))
-      .filter(pl.col("session_date_ny").is_between(date(2024, 9, 1), date(2024, 9, 30)))
-      .select("session_date_ny", "event_idx_day", "price"))
+for batch in scan_development("2024-09-01", "2024-09-30",
+                              ["session_date_ny", "event_idx_day", "price"]).to_batches():
+    frame = pl.from_arrow(batch)
 
 # DuckDB streaming Arrow input (if installed):
 import duckdb
-reader = scan_mbp1("2024-09-01", "2024-09-30", ["session_date_ny"]).to_reader()
+reader = scan_development("2024-09-01", "2024-09-30", ["session_date_ny"]).to_reader()
 connection = duckdb.connect()
 connection.register("events", reader)
 counts = connection.sql("SELECT session_date_ny, count(*) FROM events GROUP BY 1 ORDER BY 1")
 print(counts.fetchall())
 ```
 
-The high-level scanner rejects 2025 onward unless `allow_final_test=True` is
-explicitly supplied under a separately authorized final-test procedure. Direct
-file access is not a security boundary; researchers remain bound by governance.
-All supplied benchmark examples are in Validation, authorized only for this
-infrastructure audit, not feature discovery.
+`scan_development` has no holdout override; omitted dates mean the whole frozen
+Development range, lazily. The general `scan_mbp1` and monthly file resolver
+`mbp1_files` reject either holdout unless its own `allow_validation=True` or
+`allow_final_test=True` is explicitly supplied under a separately authorized
+procedure. Ranges intersecting both need both flags. Noncanonical/reversed dates
+and dates outside frozen coverage fail; future data cannot silently join a split.
+`mbp1_files` returns whole months, without row filtering; use the scanner for
+research. Direct file access is not a security boundary. Supplied benchmark
+examples are now Development (historically Validation); the historical full-period
+quality reports remain infrastructure evidence, not research entry points.
+
+The ignored split ledger under `data/metadata/mbp1/research_splits/` records
+session assignments, counts and policy/source metadata identities. It does not
+add fields to or rewrite the canonical Silver schema. Reproduce/verify it with
+`python scripts/freeze_mbp1_research_splits.py`. The Development starter is
+`notebooks/02_mbp1_development.ipynb`; the historical audit notebook is locked by default.
 
 ## Quality policy and readiness
 

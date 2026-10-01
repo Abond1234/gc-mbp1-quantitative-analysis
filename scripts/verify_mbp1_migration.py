@@ -19,6 +19,7 @@ import pyarrow.parquet as pq
 from src.data.mbp1_access import mbp1_files, scan_mbp1
 from src.data.mbp1_ingest import META, RAW, SILVER, json_write, reconcile_partition, sha256_file
 from src.data.mbp1_paths import ROOT
+from src.data.mbp1_splits import POLICY_ID, SPLITS
 
 
 def verify(hashes: bool = False):
@@ -110,12 +111,15 @@ def verify(hashes: bool = False):
         assert first["contract_change"] == row["contract_change"]
         assert count == next(r["record_count"] for r in raw if r["session_date"] == day)
         roll_queries.append({"day": day, "rows": count, "first": first})
-    try:
-        scan_mbp1("2025-01-01", "2025-01-02")
-    except PermissionError:
-        guard = "PASS"
-    else:
-        raise AssertionError("Final-test guard did not reject access")
+    guards = {}
+    for name in ("validation", "final_test"):
+        day = SPLITS[name].start.isoformat()
+        try:
+            scan_mbp1(day, day)
+        except PermissionError:
+            guards[name] = "PASS"
+        else:
+            raise AssertionError(f"{name} guard did not reject access")
     schema = json.loads((META / "native_schema.json").read_text())
     dtype = np.dtype([tuple(field) for field in schema["dtype"]])
     month = checkpoints[0]
@@ -127,7 +131,8 @@ def verify(hashes: bool = False):
               "queries": queries, "selected_row_groups": selected_row_groups,
               "total_month_row_groups": total_row_groups, "roll_boundary": roll_queries,
               "native_reconciliation_month": month["month"], "native_reconciliation": native_check,
-              "final_test_guard": guard, "cwd": str(Path.cwd()), "interpreter": sys.executable,
+              "final_test_guard": guards["final_test"], "validation_guard": guards["validation"],
+              "research_split_policy": POLICY_ID, "cwd": str(Path.cwd()), "interpreter": sys.executable,
               "source_import": str(ROOT)}
     json_write(META / "migration/validation.json", result)
     print(json.dumps(result, indent=2))

@@ -35,7 +35,8 @@ def warning_examples(sessions: list[dict]):
         indices = sorted({i for value in targets.values() for i in range(max(0, value - 2), value + 3)})
         day = session["session_date"]
         records = []
-        for batch in scan_mbp1(day, day, columns, allow_final_test=True).to_batches():
+        for batch in scan_mbp1(day, day, columns, allow_validation=True,
+                               allow_final_test=True).to_batches():
             mask = np.isin(batch.column(0).to_numpy(), indices)
             if mask.any():
                 records.extend(batch.filter(mask).to_pylist())
@@ -55,7 +56,7 @@ def clock_diagnostics(sessions: list[dict]):
                "recv_before_event_count": checks["recv_before_event"],
                "event_outside_session_count": checks["event_outside_session"]}
         for batch in scan_mbp1(day, day, ["ts_event_raw", "ts_recv_raw", "ts_in_delta"],
-                               allow_final_test=True).to_batches():
+                               allow_validation=True, allow_final_test=True).to_batches():
             if not batch.num_rows:
                 continue
             event, recv = batch.column(0).to_numpy(), batch.column(1).to_numpy()
@@ -91,7 +92,7 @@ def audit_details():
         if not session["checks"].get("recv_gap_over_60s"):
             continue
         scan = scan_mbp1(day, day, ["ts_recv_raw", "event_idx_day", "instrument_id"],
-                         allow_final_test=True)
+                         allow_validation=True, allow_final_test=True)
         previous = None
         detected = 0
         for batch in scan.to_batches():
